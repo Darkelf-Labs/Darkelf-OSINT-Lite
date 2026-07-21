@@ -224,7 +224,11 @@ class TorManager:
             self.tor_controller = Controller.from_port(port=self.control_port)
             self.tor_controller.authenticate()
             self.tor_controller.signal(Signal.NEWNYM)
-            console.print(f"[green]Tor started successfully on SOCKSPort {self.socks_port} and ControlPort {self.control_port}[/green]")
+            console.print(
+                f"[green]Tor started successfully.\n"
+                f"SOCKSPort: {self.socks_port}\n"
+                f"ControlPort: {self.control_port}[/green]"
+            )
         except Exception as e:
             _log(f"Failed to start Tor: {e}", "ERROR")
             raise RuntimeError("Tor startup failed. Ensure that Tor is installed and accessible.")
