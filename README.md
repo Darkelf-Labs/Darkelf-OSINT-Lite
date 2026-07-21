@@ -1,263 +1,244 @@
-# Darkelf Toolkit --- Refactored (Lite)
+# Darkelf OSINT Lite
 
-Darkelf Toolkit Refactored --- Lite is a streamlined, terminal-first
-OSINT toolkit inspired by the original Darkelf project.\
-This refactor focuses on safer defaults, clear UX, modular components,
-enforced stealth via Tor, and structured export handling.
+Darkelf OSINT Lite is a lightweight, terminal-first Open Source Intelligence (OSINT) toolkit inspired by the Darkelf project.
 
-This repository contains a compact CLI program (Python) that:
+Designed for ethical security research, digital forensics, Capture the Flag (CTF) competitions, and investigative workflows, Darkelf OSINT Lite emphasizes privacy, safer defaults, modular architecture, and a streamlined command-line experience.
 
--   routes network traffic through Tor by default (stealth mode
-    enabled),
--   provides OSINT primitives (search/dork, fetch, indicator
-    extraction),
--   includes WHOIS and DNS lookup capabilities,
--   exports reports and lookup results to a dedicated Documents/Darkelf
-    folder,
--   uses Rich for a clean terminal UX.
+The toolkit includes:
 
-Important: This tool is for ethical OSINT / research only. Use it only
-on systems and data you are authorized to access. See the Security &
-Legal section below.
+* Tor-aware networking
+* OSINT search and dorking
+* Safe web content retrieval
+* Indicator extraction
+* WHOIS and DNS lookups
+* Local AI-assisted report drafting (optional)
+* Structured report exporting
 
-------------------------------------------------------------------------
+> **Important:** This software is intended solely for lawful and authorized OSINT activities. Users are responsible for complying with all applicable laws and regulations.
 
-## Quick TL;DR
+---
 
-Install dependencies, start Tor on `127.0.0.1:9052`, then run:
+# Installation
 
-``` bash
-python "Darkelf CLI TL OSINT Tool Kit Lite.py"
+## Install from PyPI (Recommended)
+
+```bash
+pip install darkelf-osint-lite
 ```
 
-The CLI enforces Tor routing and basic stealth by default.
+Launch the application:
 
-------------------------------------------------------------------------
+```bash
+darkelf-osint-lite
+```
 
-## Features
+---
 
--   Enforced Tor routing for network requests (SOCKS5 `127.0.0.1:9052`)
--   DuckDuckGo onion & clearnet dork/search helper
--   Safe fetch (strips scripts/styles; blocks known trackers)
--   Indicator extraction:
-    -   emails
-    -   domains
-    -   IPs
-    -   hashes
-    -   usernames
-    -   phone numbers
--   WHOIS lookups:
-    -   domain WHOIS
-    -   IP WHOIS
--   DNS lookups:
-    -   A, AAAA, MX, TXT, NS, CNAME, SOA
-    -   reverse DNS (PTR)
-    -   bulk DNS / reverse DNS from extracted indicators
--   Structured exports:
-    -   WHOIS results
-    -   DNS results
-    -   Bulk lookup results
-    -   Indicator exports
-    -   Scribe reports
--   Exports saved to:\
-    `~/Documents/Darkelf/`
--   Lightweight logging to `darkelf_activity.log`
+## Install from Source
 
-------------------------------------------------------------------------
+Clone the repository:
 
-## Requirements
+```bash
+git clone https://github.com/Darkelf-Labs/darkelf-osint-lite.git
+cd darkelf-osint-lite
+```
 
--   Python 3.9+
--   System tor (Tor daemon) --- required for stealth/Tor routing
+Install dependencies:
 
-Install Python dependencies:
-
-``` bash
+```bash
 pip install -r requirements.txt
 ```
 
-If installing manually, required packages are:
+Run:
 
-``` bash
+```bash
+python main.py
+```
+
+---
+
+# Features
+
+* Privacy-focused command-line interface
+* Tor-aware networking
+* Multi-engine OSINT search
+* DuckDuckGo dork helper
+* Safe web page retrieval
+* Automatic indicator extraction
+
+  * Email addresses
+  * Domains
+  * IPv4 addresses
+  * Usernames
+  * Cryptographic hashes
+  * Phone numbers
+* WHOIS lookups
+
+  * Domain WHOIS
+  * IP WHOIS
+* DNS lookups
+
+  * A
+  * AAAA
+  * MX
+  * TXT
+  * NS
+  * CNAME
+  * SOA
+  * Reverse DNS (PTR)
+  * Bulk DNS lookups
+* Darkelf Scribe local AI report drafting (optional)
+* Offline Progressive Web App (PWA) report viewer
+* JSON and Markdown report exports
+* Rich terminal interface
+* Automatic activity logging
+
+Reports are saved to:
+
+```
+~/Documents/Darkelf/
+```
+
+---
+
+# Requirements
+
+* Python 3.10 or newer
+* Tor (recommended)
+* Ollama (optional for Darkelf Scribe)
+
+Install dependencies manually if needed:
+
+```bash
 pip install rich requests beautifulsoup4 tldextract phonenumbers dnspython python-whois stem psutil pysocks
 ```
 
-Important: - Do NOT install the `whois` package. - Use `python-whois`.
+> **Note:** Install **python-whois**, not the unrelated **whois** package.
 
-------------------------------------------------------------------------
+---
 
-## Tor: Install & Start
+# Tor Setup
 
-Tor must be running and listening on a SOCKS port for the CLI to route
-traffic.
+Darkelf OSINT Lite automatically detects Tor if available.
 
-Linux (Debian/Ubuntu):
+Typical SOCKS ports:
 
-``` bash
-sudo apt update
-sudo apt install tor
-sudo systemctl start tor
-```
-
-If you want to use port 9052 instead of default 9050:
-
-``` bash
-tor --SocksPort 9052
-```
-
-macOS (Homebrew):
-
-``` bash
-brew install tor
-brew services start tor
-```
-
-Windows:
-
--   Install Tor Expert Bundle or run Tor Browser.
--   Ensure a SOCKS proxy is reachable at `127.0.0.1:9052`.
--   Update the script if your Tor port differs.
+* 9050
+* 9052
+* 9150
 
 Verify Tor:
 
-``` bash
+```bash
 curl --socks5-hostname 127.0.0.1:9052 https://check.torproject.org/api/ip
 ```
 
-------------------------------------------------------------------------
+---
 
-## Getting Started
+# Usage
 
-1.  Ensure Tor is running.
-2.  Install Python dependencies.
-3.  Run the CLI:
+Launch:
 
-``` bash
-python "Darkelf CLI TL OSINT Tool Kit copy.py"
+```bash
+darkelf-osint-lite
 ```
 
-The banner will display:
+The startup banner displays the current status:
 
-    Stealth: ON · Tor: enabled · DNS: available · WHOIS: available
+```
+Stealth: ON · Tor: enabled · DNS: available · WHOIS: available
+```
 
-------------------------------------------------------------------------
+Main capabilities include:
 
-## Typical Workflow
+* Scan
+* Dork
+* Fetch
+* Indicators
+* WHOIS / DNS
+* Darkelf Scribe
+* Report Viewer
 
-### Scan
+---
 
--   Choose `scan`
--   Enter an email, username, phone, domain, or URL
--   The CLI extracts indicators and performs a Tor-routed search
+# Darkelf Scribe (Optional)
 
-### Dork
+Darkelf Scribe integrates with Ollama to generate structured OSINT investigation drafts entirely on your local machine.
 
--   Choose `dork`
--   Enter a raw search query
--   Optionally use DuckDuckGo Onion Lite
--   Preview content via Tor
+Supported capabilities include:
 
-### Fetch
+* Draft investigation summaries
+* Evidence organization
+* Markdown export
+* JSON export
+* Offline PWA report viewing
 
--   Choose `fetch`
--   Enter a URL
--   The CLI safely fetches and strips scripts/styles
+Install Ollama separately:
 
-### Indicators
+https://ollama.com
 
--   Choose `indicators`
--   View counts
--   Export to JSON
+---
 
-### WHOIS / DNS
+# Security
 
-Choose `whois/dns`:
+Darkelf OSINT Lite emphasizes privacy-first defaults.
 
--   Domain WHOIS
--   IP WHOIS
--   DNS record queries
--   Reverse DNS
--   Bulk lookups from extracted indicators
+Features include:
 
-All exports are saved automatically to:
+* Tor-aware networking
+* Safe subprocess execution
+* URL normalization and validation
+* Tracker blocking
+* Structured logging
+* Local AI processing (no cloud dependency)
 
-    ~/Documents/Darkelf/
+This Lite edition intentionally excludes destructive or anti-forensic functionality.
 
-------------------------------------------------------------------------
+---
 
-## Scribe (Optional AI Drafting)
+# Troubleshooting
 
-If Ollama is installed locally, you can use:
+**Tor unavailable**
 
--   `scribe` --- draft structured OSINT reports
--   Export to JSON or Markdown
--   View reports in the local PWA viewer
+* Ensure Tor is running.
+* Verify the SOCKS port.
+* Install `pysocks`.
 
-Ollama must be installed separately:
+**WHOIS errors**
 
-https://ollama.com/
+* Install `python-whois`.
+* Remove the incorrect `whois` package if installed.
 
-------------------------------------------------------------------------
+**DNS lookup errors**
 
-## Configuration
+* Install `dnspython`.
 
-Default SOCKS proxy:
+---
 
-    socks5h://127.0.0.1:9052
+# Contributing
 
-If your Tor uses another port: - Edit proxy configuration inside the
-script.
+Contributions are welcome.
 
-Safe tracker blocklist: - Modify `self.safe_blocklist` if needed.
+Please:
 
-------------------------------------------------------------------------
+* Fork the repository
+* Create a feature branch
+* Submit a pull request with a clear description
 
-## Security & Legal
+Security improvements, bug fixes, documentation, and usability enhancements are encouraged.
 
--   Use only for lawful, authorized OSINT research.
--   Tor provides network-level anonymity but does not remove legal
-    responsibility.
--   WHOIS and DNS queries may still reveal activity to upstream
-    providers.
--   Exports are stored under `~/Documents/Darkelf/`.
--   Logs are written to `darkelf_activity.log`.
+---
 
-No destructive anti-forensics features are enabled in this Lite
-refactor.
+# License
 
-------------------------------------------------------------------------
+Licensed under the **GNU Lesser General Public License v3.0 or later (LGPL-3.0-or-later).**
 
-## Troubleshooting
+See the LICENSE file for details.
 
-Tor not reachable: - Confirm Tor is running. - Confirm correct SOCKS
-port. - Ensure `pysocks` is installed.
+---
 
-WHOIS errors: - Ensure `python-whois` is installed. - Remove incorrect
-`whois` package if present.
+# Author
 
-DNS errors: - Ensure `dnspython` is installed.
+**Dr. Kevin Moore**
 
-------------------------------------------------------------------------
-
-## Contributing
-
-Contributions welcome.
-
--   Fork the repo
--   Create a feature branch
--   Submit a PR with clear description
-
-Avoid adding destructive or unsafe features without explicit safeguards.
-
-------------------------------------------------------------------------
-
-## License
-
-LGPL-3.0-or-later --- see LICENSE file.
-
-------------------------------------------------------------------------
-
-## Attribution
-
-Refactor by: Darkelf2024\
-Original inspiration: Dr. Kevin Moore and the Darkelf project.
+Creator of the Darkelf project and the Darkelf family of privacy-focused security and research tools.
