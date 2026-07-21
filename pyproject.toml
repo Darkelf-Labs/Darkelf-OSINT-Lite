@@ -103,7 +103,7 @@
  ]
 
  [project.scripts]
- darkelf-research = "darkelf_osint_lite:main"
+ darkelf-osint-lite = "darkelf_osint_lite:main"
 
  [tool.ruff]
  line-length = 127
